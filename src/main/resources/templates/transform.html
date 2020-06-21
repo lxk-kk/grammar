@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-th-fragment="transform(data)" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div th:object="${data.regularGrammar.body}">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <div th:if="*{type == 1}">左线性文法：G(VT,VN,P,S)</div>
+                <div th:if="*{type == 2}">右线性文法：G(VT,VN,P,S)</div>
+                <div th:if="*{type == null}">文法转换：G(VT,VN,P,S)</div>
+            </h3>
+        </div>
+        <div class="panel-footer">
+            <dt>VT：</dt>
+            <dd th:text="*{terminalSym}"></dd>
+        </div>
+        <div class="panel-footer">
+            <dt>VN：</dt>
+            <dd th:text="*{nonTerminalSym}"></dd>
+        </div>
+        <div class="panel-footer">
+            <dt>P：</dt>
+            <dd th:each="p : *{production}">
+                <span th:text="${p}"></span>
+            </dd>
+        </div>
+        <div class="panel-footer">
+            <dt>S：</dt>
+            <dd th:text="*{symbol}"></dd>
+        </div>
+    </div>
+    <div class="panel-group" id="panel-789282">
+        <div class="panel panel-default" th:object="${data.dfa.body}">
+            <div class="panel-heading">
+                <a class="panel-title collapsed" href="#panel-element-412049" data-toggle="collapse"
+                   data-parent="#panel-789282">DFA</a>
+            </div>
+            <div class="panel-collapse collapse" id="panel-element-412049">
+                <div class="panel-body">
+                    <dl>
+                        <dt> K ：</dt>
+                        <dd th:text="*{k}">k items</dd>
+                        <br>
+                        <dt> VT：</dt>
+                        <dd th:text="*{vt}"> vt items</dd>
+                        <br>
+                        <dt> M ：</dt>
+                        <dd th:each="mm : *{m}"><span th:text="${mm}">m items</span></dd>
+                        <br>
+                        <dt> S ：</dt>
+                        <dd th:text="*{s}"> s items</dd>
+                        <br>
+                        <dt> Z ：</dt>
+                        <dd th:text="*{z}"> z items</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a class="panel-title collapsed" href="#panel-element-395649" data-toggle="collapse"
+                   data-parent="#panel-789282">
+                    正规表达式
+                </a>
+            </div>
+            <div class="panel-collapse collapse" id="panel-element-395649">
+                <div class="panel-body">
+                    <dl>
+                        <span id="expression" th:text="${data.expression.body}">regular expression</span>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

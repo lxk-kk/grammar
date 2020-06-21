@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Grammar</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <h3 class="text-center text-info">
+                正规文法及其应用
+            </h3>
+            <div class="tabbable" id="tabs-506833">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#panel-837695" data-toggle="tab">正规文法</a>
+                    </li>
+                    <li>
+                        <a href="#panel-511721" data-toggle="tab">敏感词过滤</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="panel-837695">
+                        <div th:replace="~{grammar::grammar()}"></div>
+                    </div>
+                    <div class="tab-pane" id="panel-511721">
+                        <div th:replace="~{application::application()}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

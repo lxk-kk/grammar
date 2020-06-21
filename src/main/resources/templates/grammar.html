@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-th-fragment="grammar()" xmlns:th="http://www.w3.org/1999/xhtml">
+<style type="text/css">
+    .select-bg {
+        display: inline-block;
+        width: 85px;
+        height: 20px;
+        line-height: 20px;
+        position: relative;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .select-green {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        position: relative;
+        outline: none;
+        border: 0 none;
+        padding: 0 0 0 0;
+        background: none;
+        background-color: transparent;
+        overflow: hidden;
+    }
+</style>
+<body>
+<div class="row clearfix">
+    <div class="col-md-6 column">
+        <div class="list-group">
+            <a class="list-group-item active ">
+                <div class="select-bg">
+                    <select class="select-green" id="type" name="type">
+                        <option value=1 selected>左线性文法</option>
+                        <option value=2>右线性文法</option>
+                    </select>
+                </div>
+                G(VT,VN,P,S)
+            </a>
+            <div class="panel panel-success">
+                <div class="panel-footer">
+                    VT
+                    <input class="form-control" id="gvt" type="text"/>
+                </div>
+                <div class="panel-footer">
+                    VN
+                    <input class="form-control" id="gvn" type="text"/>
+                </div>
+                <div class="panel-footer">
+                    P<textarea class="form-control" id="gp" rows="2" cols="10"></textarea>
+                    <p class="list-group-item-text">
+                        注：产生式请换行输入
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    S<input class="form-control" id="gs" type="text"/>
+                </div>
+            </div>
+            <div class="list-group-item">
+                注意：
+            </div>
+            <div class="list-group-item">
+                <p class="list-group-item-text">
+                    空=[[${none}]]
+                </p>
+            </div>
+        </div>
+        <button class="btn btn-info active btn-block btn-default" type="button" onclick="transform()">转换</button>
+    </div>
+    <div class="col-md-6 column">
+        <div id="initTransform">
+            <div th:replace="~{transform::transform(${data})}"></div>
+        </div>
+        <div class="panel-footer">
+            <dt>注意：</dt>
+            <dd>[[${init}]]=初始态 </dd>
+            <dd>[[${final}]]=终态</dd>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function transform() {
+        var vt = $("#gvt").val();
+        var vn = $("#gvn").val();
+        var p = $("#gp").val();
+        var s = $("#gs").val();
+        var type = $("#type").val();
+        /*console.log(type);*/
+        $.ajax({
+            type: "POST",
+            url: "http://47.103.77.143/grammar/transform",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "type": type,
+                "terminalSym": vt,
+                "nonTerminalSym": vn,
+                "production": p,
+                "symbol": s
+            }), success: function (data) {
+                console.log(data);
+                if (data.code === 0) {
+                    alert(data.msg);
+                    return;
+                }
+                $("#initTransform").html(data);
+            }, error: function (data) {
+                alert(data.msg);
+            }
+
+        });
+
+    }
+</script>
+</html>

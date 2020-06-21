@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      data-th-fragment="application()" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <form role="form">
+                <div class="form-group">
+                    <label for="sensitive">敏感词</label>
+                    <input class="form-control" id="sensitive" type="text"/>
+                    <p class="help-block">
+                        敏感词之间使用 空格 分割
+                    </p>
+                    <!--<input class="form-control" id="exampleInputEmail1" type="email" />-->
+                </div>
+                <div class="form-group">
+                    <label for="sentence">句子</label>
+                    <textarea class="form-control" id="sentence" rows="5" cols="10"></textarea>
+                </div>
+            </form>
+            <button class="btn btn-default btn-block active btn-info" type="button" onclick="filter()">过滤</button>
+        </div>
+        <div class="col-md-6 column">
+            <dl>
+                <dt>
+                    过滤的敏感词：
+                </dt>
+                <dd id="sensitiveWords">
+                    <div th:if="${filter == null}">
+                        there are your sensitive words which you filtered!
+                    </div>
+                    <div  th:if="${filter != null}" th:each="word:${filter}">
+                        <span th:text="${word}"></span>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function filter() {
+        var sensitive = $("#sensitive").val();
+        var sentence = $("#sentence").val();
+        $.ajax({
+            url: "http://47.103.77.143/grammar/filter",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "sensitive": sensitive,
+                "sentence": sentence
+            }),
+            success: function (data) {
+                if (data.code === 0) {
+                    alert(data.msg);
+                    return;
+                }
+                console.log(data);
+                $("#sensitiveWords").html(data);
+            },
+            error: function (data) {
+                alert(data.msg);
+            }
+        });
+    }
+</script>
+</html>
