@@ -44,7 +44,7 @@
         var sensitive = $("#sensitive").val();
         var sentence = $("#sentence").val();
         $.ajax({
-            url: "http://47.103.77.143/grammar/filter",
+            url: "/grammar/filter",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({
